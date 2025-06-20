@@ -1,0 +1,33 @@
+#container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#grid{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 600px;
+    height: 600px;
+    
+}
+
+.row{
+    display: flex;
+}
+
+.square, 
+.pixel
+{
+    background-color: lightgrey;
+}
+
+.pixel{
+    background-color: black;
+}
