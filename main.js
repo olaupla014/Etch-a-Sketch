@@ -1,11 +1,11 @@
 
 function newGrid(N){
     const content = document.querySelector("#container");
+
     const grid = document.createElement("div")
     grid.setAttribute("id", "grid")
 
     const totalSize = 600
-    const gap = 1
 
     for (let i = 0; i < N; ++i){
         const row = document.createElement("div");
@@ -45,7 +45,31 @@ function addPixelEfect(){
 })
 }
 
+function removePixelEfect(){
+    const squares = document.querySelectorAll(".square");
+
+    squares.forEach((square) => {
+    square.addEventListener("mouseenter", function(event){
+        const square = event.target;
+        square.classList.remove("pixel")
+        console.log(square)
+     })
+})
+}
+
+function fillGrid(){
+    const squares = document.querySelectorAll(".square");
+
+    squares.forEach((square) => {
+        square.classList.add("pixel")
+})
+}
+
 const grid = document.querySelector("#gridButton")
+const erase = document.querySelector("#erase")
+const paint = document.querySelector("#paint")
+
+
 grid.addEventListener("click", function(event){
     let N = prompt("Type in the number of rows and columns!")
     removeGrid()
@@ -54,9 +78,22 @@ grid.addEventListener("click", function(event){
         N = 50;
     }
     newGrid(N)
+})
+
+
+erase.addEventListener("click", function(event){
+    removePixelEfect()
+})
+
+
+paint.addEventListener("click", function(event){
     addPixelEfect()
 })
 
+const fill = document.querySelector("#fill")
+fill.addEventListener("click", function(event){
+    fillGrid()
+})
+
 newGrid(16)
-addPixelEfect()
 
