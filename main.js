@@ -1,3 +1,8 @@
+let isDrawing = false;
+let isErasing = false;
+
+let currentMode = "paint"
+
 
 function newGrid(N){
     const content = document.querySelector("#container");
@@ -26,51 +31,55 @@ function newGrid(N){
     }
 
     content.appendChild(grid)
-}
+    grid.addEventListener("mousedown", function(e){
+        if (currentMode == "paint"){
+            isDrawing = true;
+        } else{
+            isErasing = true;
+        }
+    })
+
+    grid.addEventListener("mouseup", function(e){
+        isDrawing = false;
+        isErasing = false;
+    })
+    }
 
 function removeGrid(){
-    const content = document.querySelector("#container");
     const grid = document.querySelector("#grid");
-    content.removeChild(grid)
+    if (grid){
+        grid.remove();
+    }
 }
 
-function addPixelEfect(){
+function addPixelListeners(){
     const squares = document.querySelectorAll(".square");
 
     squares.forEach((square) => {
      square.addEventListener("mouseenter", function(event){
-        const square = event.target;
-        square.classList.add("pixel")
+        if (isDrawing){
+            const square = event.target;
+            square.classList.add("pixel")
+        }
+
+        if (isErasing){
+            const square = event.target;
+            square.classList.remove("pixel")
+        }
      })
 })
 }
 
-function removePixelEfect(){
-    const squares = document.querySelectorAll(".square");
-
-    squares.forEach((square) => {
-    square.addEventListener("mouseenter", function(event){
-        const square = event.target;
-        square.classList.remove("pixel")
-        console.log(square)
-     })
-})
-}
 
 function fillGrid(){
     const squares = document.querySelectorAll(".square");
-
     squares.forEach((square) => {
         square.classList.add("pixel")
 })
 }
 
-const grid = document.querySelector("#gridButton")
-const erase = document.querySelector("#erase")
-const paint = document.querySelector("#paint")
-
-
-grid.addEventListener("click", function(event){
+const gridButton = document.querySelector("#gridButton")
+gridButton.addEventListener("click", function(event){
     let N = prompt("Type in the number of rows and columns!")
     removeGrid()
 
@@ -80,19 +89,29 @@ grid.addEventListener("click", function(event){
     newGrid(N)
 })
 
+const erase = document.querySelector("#erase")
+const paint = document.querySelector("#paint")
 
 erase.addEventListener("click", function(event){
-    removePixelEfect()
+    currentMode = "erase"
+    addPixelListeners()
 })
 
 
 paint.addEventListener("click", function(event){
-    addPixelEfect()
+   currentMode = "paint"
+   addPixelListeners()
 })
 
 const fill = document.querySelector("#fill")
 fill.addEventListener("click", function(event){
     fillGrid()
+})
+
+const del = document.querySelector("#delete")
+del.addEventListener("click",function(e){
+    removeGrid()
+    newGrid(16)
 })
 
 newGrid(16)
