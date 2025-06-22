@@ -10,7 +10,7 @@ function newGrid(N){
     const grid = document.createElement("div")
     grid.setAttribute("id", "grid")
 
-    const totalSize = 600
+    const TOTAL_SIZE = 600
 
     for (let i = 0; i < N; ++i){
         const row = document.createElement("div");
@@ -20,7 +20,7 @@ function newGrid(N){
             const square = document.createElement("div");
             square.classList.add("square")
 
-            const squareSize = totalSize / N;
+            const squareSize = TOTAL_SIZE / N;
             square.style.width = squareSize + 'px';
             square.style.height = squareSize + 'px';
 
@@ -45,14 +45,15 @@ function addPixelListeners(){
 
     squares.forEach((square) => {
      square.addEventListener("mousemove", function(event){
+        event.preventDefault();
         if (isDrawing){
             const square = event.target;
-            square.classList.add("pixel")
+            square.classList.add("pixel");
         }
 
         if (isErasing){
             const square = event.target;
-            square.classList.remove("pixel")
+            square.classList.remove("pixel");
         }
      })
 })
@@ -102,7 +103,8 @@ del.addEventListener("click",function(e){
     newGrid(16)
 })
 
-document.addEventListener("mousedown", function(e){
+document.addEventListener("mousedown", function(event){
+    event.preventDefault();
     if (currentMode == "paint"){
         isDrawing = true;
     } else{
