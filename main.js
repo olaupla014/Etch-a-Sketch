@@ -31,19 +31,7 @@ function newGrid(N){
     }
 
     content.appendChild(grid)
-    grid.addEventListener("mousedown", function(e){
-        if (currentMode == "paint"){
-            isDrawing = true;
-        } else{
-            isErasing = true;
-        }
-    })
-
-    grid.addEventListener("mouseup", function(e){
-        isDrawing = false;
-        isErasing = false;
-    })
-    }
+}
 
 function removeGrid(){
     const grid = document.querySelector("#grid");
@@ -56,7 +44,7 @@ function addPixelListeners(){
     const squares = document.querySelectorAll(".square");
 
     squares.forEach((square) => {
-     square.addEventListener("mouseenter", function(event){
+     square.addEventListener("mousemove", function(event){
         if (isDrawing){
             const square = event.target;
             square.classList.add("pixel")
@@ -83,7 +71,7 @@ gridButton.addEventListener("click", function(event){
     let N = prompt("Type in the number of rows and columns!")
     removeGrid()
 
-    if (N >= 100){
+    if (N > 100){
         N = 50;
     }
     newGrid(N)
@@ -112,6 +100,19 @@ const del = document.querySelector("#delete")
 del.addEventListener("click",function(e){
     removeGrid()
     newGrid(16)
+})
+
+document.addEventListener("mousedown", function(e){
+    if (currentMode == "paint"){
+        isDrawing = true;
+    } else{
+        isErasing = true;
+    }
+})
+
+document.addEventListener("mouseup", function(e){
+    isDrawing = false;
+    isErasing = false;
 })
 
 newGrid(16)
